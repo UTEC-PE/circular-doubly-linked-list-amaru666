@@ -1,5 +1,11 @@
-#ifndef NODE_H
-#define NODE_H
+//
+// Created by jaox on 8/28/18.
+//
+
+#ifndef LISTADOBLECIRCULARENLAZADA_NODE_H
+#define LISTADOBLECIRCULARENLAZADA_NODE_H
+
+
 
 #include <iostream>
 
@@ -11,8 +17,8 @@ struct Node {
     Node* next;
     Node* prev;
 
-    void killSelf();
-    void print_next();
 };
 
-#endif
+
+
+#endif //LISTADOBLECIRCULARENLAZADA_NODE_H

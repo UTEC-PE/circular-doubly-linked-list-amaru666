@@ -17,87 +17,104 @@ using namespace std;
 #define POP_BACK 3
 
 int generateRandomInt(int min, int max);
-void insertIntoList(List<int> &numbers);
-void removeFromList(List<int> &numbers);
+void insertIntoList(List<int> *numbers);
+void removeFromList(List<int> *numbers);
 
 int main(int argc, char *argv[]) {
     cout << "===========================================================" << endl;
     cout << "\tDouble Linked Circular List Practice" << endl;
     cout << "===========================================================" << endl << endl;
 
-    List<int> test;
+    List<int> *test = new List<int>();
+    Iterator<int> it = test->begin();
 
-    const int numberOfElements = generateRandomInt(MIN, MAX);
-    for (int i = 0; i < numberOfElements; i++) {
-        insertIntoList(test);
-    }
 
-    assert(test.size() == numberOfElements && "Something is wrong with the push methods");
 
-    const int elementsToRemove = generateRandomInt(0, MIN - 1);
-    for (int i = 0; i < elementsToRemove; i++) {
-        removeFromList(test);
-    }
 
-    const int newNumbersSize = numberOfElements - elementsToRemove;
-    assert(test.size() == newNumbersSize && "Something is wrong with the pop functions");
+       const int numberOfElements = generateRandomInt(MIN, MAX);
+        cout<<"number of elements = "<<numberOfElements<<endl;
+        cout<<"INSERT INTO LIST "<<endl;
+         for (int i = 0; i < numberOfElements; i++) {
+             insertIntoList(test);
+         }
+         cout<<"size() : "<<test->size()<<endl;
+         assert(test->size() == numberOfElements && "Something is wrong with the push methods");
 
-    test.clear();
-    assert(test.empty() && "Something is wrong with the clear or empty methods");
-    assert(test.size() == 0 && "Something is wrong with the clear method");
+         const int elementsToRemove = generateRandomInt(0, MIN - 1);
+        cout<<"REMOVE FROM LIST"<<endl;
+         for (int i = 0; i < elementsToRemove; i++) {
+             removeFromList(test);
+         }
+        cout<<"size() : "<<test->size()<<endl;
 
-    for (int i = 0; i < numberOfElements; i++) {
-        insertIntoList(test);
-    }
+         const int newNumbersSize = numberOfElements - elementsToRemove;
+         cout<<"new number size = "<<newNumbersSize<<endl;
 
-    Iterator<int> ite = test.begin();
-    assert(test.front() == *ite && "Something is wrong with the front method or the iterator");
 
-    const int position = generateRandomInt(0, numberOfElements - 1);
-    for (int i = 0; i < position; i++) {
-        ++ite;
-    }
-    assert(test.get(position) == *ite && "Something is wrong with the get method or the iterator");
-    
-    ite = test.begin();
-    for (int i = 0; i < numberOfElements - 1; i++) {
-        ++ite;
-    }
-    assert(test.back() == *ite && "Something is wrong with the back method or the iterator");
 
-    --ite;
-    assert(test.get(numberOfElements - 2) == *ite && "Something is wrong with the iterator (-- operator)");
+         assert(test->size() == newNumbersSize && "Something is wrong with the pop functions");
+         cout<<test->size()<<endl;
+         test->clear();
+         cout<<test->size()<<endl;
+         cout<<test->empty()<<endl;
 
-    for (ite = test.begin(); ite != test.end(); ++ite) {
-        cout << *ite << " ";
-    }
-    cout << endl;
 
-    system("read");
-    return EXIT_SUCCESS;
+         assert(test->empty() && "Something is wrong with the clear or empty methods");
+         assert(test->size() == 0 && "Something is wrong with the clear method");
+
+         for (int i = 0; i < numberOfElements; i++) {
+             insertIntoList(test);
+         }
+
+         Iterator<int> ite = test->begin();
+         assert(test->front() == *ite && "Something is wrong with the front method or the iterator");
+
+         const int position = generateRandomInt(0, numberOfElements - 1);
+         for (int i = 0; i < position; i++) {
+             ++ite;
+         }
+         assert(test->get(position) == *ite && "Something is wrong with the get method or the iterator");
+
+         ite = test->begin();
+         for (int i = 0; i < numberOfElements - 1; i++) {
+             ++ite;
+         }
+         assert(test->back() == *ite && "Something is wrong with the back method or the iterator");
+
+         --ite;
+         assert(test->get(numberOfElements - 2) == *ite && "Something is wrong with the iterator (-- operator)");
+
+         for (ite = test->begin(); ite != test->end(); ++ite) {
+             cout << *ite << " ";
+         }
+         cout << endl;
+
+         system("read");
+         return EXIT_SUCCESS;
+     }
+
+     int generateRandomInt(int min, int max) {
+         mt19937 rng;
+         rng.seed(random_device()());
+         uniform_int_distribution<mt19937::result_type> distribution(min, max);
+         return distribution(rng);
+     }
+
+     void insertIntoList(List<int> *numbers) {
+         const int numberToInsert = generateRandomInt(0, 100);
+
+         const int action = generateRandomInt(0, 1);
+         switch (action) {
+             case PUSH_FRONT: numbers->push_front(numberToInsert); break;
+             case PUSH_BACK: numbers->push_back(numberToInsert); break;
+         }
+     }
+
+     void removeFromList(List<int> *numbers) {
+         const int action = generateRandomInt(2, 3);
+         switch (action) {
+             case POP_FRONT: numbers->pop_front(); break;
+             case POP_BACK: numbers->pop_back(); break;
+         }
+
 }
-
-int generateRandomInt(int min, int max) {
-    mt19937 rng;
-    rng.seed(random_device()());
-    uniform_int_distribution<mt19937::result_type> distribution(min, max); 
-    return distribution(rng);
-}
-
-void insertIntoList(List<int> &numbers) {
-    const int numberToInsert = generateRandomInt(0, 100);
-
-    const int action = generateRandomInt(0, 1);
-    switch (action) {
-        case PUSH_FRONT: numbers.push_front(numberToInsert); break;
-        case PUSH_BACK: numbers.push_back(numberToInsert); break;
-    }
-} 
-
-void removeFromList(List<int> &numbers) {
-    const int action = generateRandomInt(2, 3);
-    switch (action) {
-        case POP_FRONT: numbers.pop_front(); break;
-        case POP_BACK: numbers.pop_back(); break;
-    }
-} 
